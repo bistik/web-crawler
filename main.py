@@ -1,9 +1,11 @@
 import sys
 
-from crawl import crawl_page
+from aiohttp.cookiejar import asyncio
+
+from crawl import crawl_site_async
 
 
-def main():
+async def main():
     base_url: str = ""
     if len(sys.argv) < 2:
         print("no website provided")
@@ -14,7 +16,10 @@ def main():
     else:
         base_url = sys.argv[1]
         print(f"starting crawl of: {base_url}")
-        crawl_page("https://learnwebscraping.dev", current_url="https://learnwebscraping.dev/practice/ecommerce/")
+        page_data = await crawl_site_async(base_url)
+        for pd in page_data.values():
+            print(pd)
+        # crawl_page("https://learnwebscraping.dev", current_url="https://learnwebscraping.dev/practice/ecommerce/")
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
