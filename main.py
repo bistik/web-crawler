@@ -10,13 +10,12 @@ async def main():
     if len(sys.argv) < 2:
         print("no website provided")
         sys.exit(1)
-    elif len(sys.argv) > 2:
-        print("too many arguments provided")
-        sys.exit(1)
     else:
         base_url = sys.argv[1]
+        max_concurrency = int(sys.argv[2])
+        max_pages = int(sys.argv[3])
         print(f"starting crawl of: {base_url}")
-        page_data = await crawl_site_async(base_url)
+        page_data = await crawl_site_async(base_url, max_concurrency, max_pages)
         for pd in page_data.values():
             print(pd)
         # crawl_page("https://learnwebscraping.dev", current_url="https://learnwebscraping.dev/practice/ecommerce/")
